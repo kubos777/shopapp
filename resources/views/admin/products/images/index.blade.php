@@ -57,67 +57,93 @@
   </nav>
   <div class="page-header header-filter" data-parallax="true" style="background-image: url(' {{ asset('/img/profile_city.jpg') }}')">
   </div>
+<style>
+           .upload-btn-wrapper {
+            position: relative;
+            display: inline-block;
 
+            margin: 100px;
+          }
+
+          .btnfile {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+          }
+
+          .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            width: 133px;
+            height: 43px;
+          }
+        </style>
   <div class="main main-raised">
     <div class="container ">
 
       <div class="section ">
-        <h2 class="title text-center">Lista de productos</h2>
+        <h2 class="title text-center">Imágenes del producto: {{ $product->name  }}</h2>
         <div class="team">
-          <div class="row">
 
-            <a href="{{ url('/admin/products/create/') }}" class="btn btn-success">Nuevo producto</a>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="text-center">#</th>
-                  <th>Nombre</th>
-                  <th class="text-center ">Descripción</th>
-                  <th class="text-center ">Categoría</th>
-                  <th class="text-center">Precio</th>
-                  <th class="text-center" >Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($productos as $producto)
+          <form method="POST" action="" enctype="multipart/form-data">
+            @csrf
+            <!--<input name="photo" type="file"  required>-->
+            
+            <div class="upload-btn-wrapper">
+              <button class="btnfile">Subir foto</button>
+              <input type="file" name="photo" required />
+            </div>
 
-                <tr>
-                  <td class="text-center">{{ $producto->id }}</td>
-                  <td>{{ $producto->name }}</td>
-                  <td >{{ $producto->description }}</td>
-                  <td>{{ $producto->category ? $producto->category->name : 'General' }}</td>
-                  <td class="text-right">&#36;{{ $producto->price }}</td>
-                  <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" title="Ver producto" class="btn btn-info btn-simple btn-xs">
-                      <i class="fa fa-info"></i>
-                    </button>
-                    <a href="{{ url('/admin/products/'.$producto->id.'/edit/') }}" type="button" rel="tooltip" title="Editar" class="btn btn-success btn-simple btn-xs">
-                      <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="{{ url('/admin/products/'.$producto->id.'/images/') }}" type="button" rel="tooltip" title="Ver imagenes" class="btn btn-warning btn-simple btn-xs">
-                      <i class="fa fa-image"></i>
-                    </a>
-                    <form action="{{ url('/admin/products/'.$producto->id) }}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" rel="tooltip" title="Eiminar" class="btn btn-danger btn-simple btn-xs">
-                        <i class="fa fa-times"></i>
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
+            <button type="submit" class="btn btn-primary btn-round">Subir nueva imágen</button>
+            <a class="btn btn-default btn-round" href="{{ url('/admin/products/') }}">Volver al listado de productos</a>
+          </form>
 
-            </table>
-            {{ $productos->links() }}
+
+        <div class="row">
+          @foreach ($images as $image)
+
+          <div class="col-md-4">
+            <div class="card" style="width: 20rem;">
+              <img class="card-img-top" src="{{ $image->url }}" alt="Card image cap">
+              <div class="card-body">
+                <form method="POST" action="">
+                  @csrf
+                  @method('DELETE')
+
+                  <input type="hidden" name="image_id" value="{{ $image->id }}">
+                  
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+
+                  @if ($image->featured)
+                  <button type="button" class="btn btn-info btn-fab btn-fab-mini btn-round">
+                    <i class="material-icons">favorite</i> 
+                  </button >
+                  @else
+                  <a href="{{ url('admin/products/'.$product->id.'/images/select/'.$image->id) }}" class="btn btn-primary btn-fab btn-fab-mini btn-round">
+                    <i class="material-icons">favorite</i> 
+                  </a>
+                  @endif
+                </form>
+              </div>
+            </div>
           </div>
+
+          @endforeach
         </div>
       </div>
-
     </div>
+
   </div>
-  @include('includes.footer')
+</div>
+@include('includes.footer')
 </body>
 <script src="{{ asset('js/core/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/core/popper.min.js')}}" type="text/javascript"></script>

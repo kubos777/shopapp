@@ -22,15 +22,29 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin/products/','ProductController@index'); //Listar los productos en una tabla
-Route::get('/admin/products/create/','ProductController@create'); //Mostrar el form para crear nuevo producto
-Route::post('/admin/products/','ProductController@store'); //Hacer el registro en la BD
 
-Route::get('/admin/products/{id}/edit/','ProductController@edit'); //Muestra el producto a editar
+Route::middleware(['auth','admin'])->prefix('admin')->group(function(){
 
-Route::post('/admin/products/{id}/edit/','ProductController@update'); //Guarda los cambios
+		Route::get('/products/','ProductController@index'); //Listar los productos en una tabla
+		Route::get('/products/create/','ProductController@create'); //Mostrar el form para crear nuevo producto
+		Route::post('/products/','ProductController@store'); //Hacer el registro en la BD
 
-//Route::post('/admin/products/{id}/delete/','ProductController@destroy');
+		Route::get('/products/{id}/edit/','ProductController@edit'); //Muestra el producto a editar
 
-Route::delete('/admin/products/{id}','ProductController@destroy');
+		Route::post('/products/{id}/edit/','ProductController@update'); //Guarda los cambios
+
+		//Route::post('/products/{id}/delete/','ProductController@destroy');
+
+		Route::delete('/products/{id}','ProductController@destroy');
+
+		Route::get('/products/{id}/images','ImageController@index'); //Ver imágenes
+		Route::post('/products/{id}/images','ImageController@store'); //Subir imágenes
+		Route::delete('/products/{id}/images','ImageController@destroy'); //Delete
+
+		Route::get('/products/{id}/images/select/{image}','ImageController@select');
+		
+
+});
+
+
 

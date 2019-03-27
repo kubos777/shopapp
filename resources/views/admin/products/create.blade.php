@@ -67,35 +67,50 @@
             <div class="col-md-8 ml-auto mr-auto">
               <h2 class="text-center title">Registra tu producto</h2>
               <h4 class="text-center description">Ingresa la información</h4>
+            
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                  </div>
+              @endif
+
               <form class="contact-form" action="{{ url('/admin/products/') }}" method="POST">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="bmd-label-floating">Nombre del producto</label>
-                      <input type="text" name="name" class="form-control">
+                      <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                     </div>
                     <div class="form-group">
                       <label class="bmd-label-floating">Descripción corta</label>
-                      <input type="text" name="description" class="form-control">
+                      <input type="text" name="description" class="form-control" value="{{ old('description') }}">
                     </div>
                   </div>
                   <div class="col-md-6">
                    <div class="form-group">
                     <label class="bmd-label-floating">Precio del producto</label>
-                    <input type="number" step="0.01"  name="price" class="form-control">
+                    <input type="number" step="0.01"  name="price" class="form-control" value="{{ old('price') }}">
                   </div>
 
                 </div>
               </div>
               <div class="form-group">
                 <label for="exampleMessage" class="bmd-label-floating">Descripción detallada</label>
-                <textarea class="form-control" name="long_description" rows="4" id="exampleMessage"></textarea>
+                <textarea class="form-control" name="long_description" rows="4" id="exampleMessage">
+                 {{ old('long_description') }}
+                </textarea>
               </div>
               <div class="row">
                 <div class="col-md-4 ml-auto mr-auto text-center">
                   <button class="btn btn-primary btn-raised">
                   Registrar producto</button>
+                  <a href="{{ url('/admin/products/') }}" class="btn btn-info btn-raised">
+                  Regresar</a>
                 </div>
               </div>
             </form>
@@ -106,41 +121,7 @@
 
   </div>
 </div>
-<footer class="footer footer-default">
-  <div class="container">
-    <nav class="float-left">
-      <ul>
-        <li>
-          <a href="https://www.creative-tim.com">
-            Creative Tim
-          </a>
-        </li>
-        <li>
-          <a href="https://creative-tim.com/presentation">
-            About Us
-          </a>
-        </li>
-        <li>
-          <a href="http://blog.creative-tim.com">
-            Blog
-          </a>
-        </li>
-        <li>
-          <a href="https://www.creative-tim.com/license">
-            Licenses
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="copyright float-right">
-      &copy;
-      <script>
-        document.write(new Date().getFullYear())
-      </script>, made with <i class="material-icons">favorite</i> by
-      <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-    </div>
-  </div>
-</footer>
+@include('includes.footer')
 </body>
 <script src="{{ asset('js/core/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/core/popper.min.js')}}" type="text/javascript"></script>
