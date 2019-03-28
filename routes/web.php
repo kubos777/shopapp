@@ -22,8 +22,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/products/{id}','ProductController@show'); 
 
-Route::middleware(['auth','admin'])->prefix('admin')->group(function(){
+Route::post('/cart','CartDetailController@store');
+Route::delete('/cart','CartDetailController@destroy');
+
+
+Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
 		Route::get('/products/','ProductController@index'); //Listar los productos en una tabla
 		Route::get('/products/create/','ProductController@create'); //Mostrar el form para crear nuevo producto

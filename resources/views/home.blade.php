@@ -78,7 +78,7 @@
 
 </div>
 <div class="main main-raised">
-
+<div class="container">
   <div class="section text-center">
     <h2 class="title">Dashboard</h2>
     <div class="team">
@@ -87,21 +87,64 @@
       <!--
         color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
       -->
+      <li class="nav-item active ">
+        <a class="nav-link active" href="#tasks-1" role="tab" data-toggle="tab">
+          <i class="material-icons">shopping_cart</i>
+          Carrito de compras
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="#dashboard-1" role="tab" data-toggle="tab">
           <i class="material-icons">dashboard</i>
           Productos
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#tasks-1" role="tab" data-toggle="tab">
-          <i class="material-icons">shopping_cart</i>
-          Carrito de compras
-        </a>
-      </li>
     </ul>
 
   </div>
+
+            <div class="row ">
+
+            
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">Nombre</th>
+                  <th class="text-center ">Descripción</th>
+                  <th class="text-center"> Imágen</th>
+                  <th class="text-center ">Cantidad</th>
+                  <th class="text-center">Precio</th>
+                  <th class="text-center" >Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (auth()->user()->cart->details as $detail)
+
+                <tr>
+                  <td>{{ $detail->product->name }}</td>
+                  <td>{{ $detail->product->description }}</td>
+                  <td ><img src="{{$detail->product->featured_image_url}}"  width="50" height="50"></td>
+                  <td class="text-center">{{ $detail->quantity }}</td>
+                  <td class="text-center">&#36;{{ $detail->product->price }}</td>
+                  <td class="text-center">&#36;{{ $detail->quantity * $detail->product->price }}</td>
+                  <td class="td-actions text-right">
+                    <form action="{{ url('/cart') }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <input type="hidden" name="cart_detail_id" value="{{ $detail->id }}">
+                      <button type="submit" rel="tooltip" title="Eiminar" class="btn btn-danger btn-simple btn-xs">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+
+            </table>
+            
+          </div>
+</div>
 </div>
 </div>
 

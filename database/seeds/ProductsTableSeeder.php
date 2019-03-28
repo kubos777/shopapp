@@ -18,13 +18,13 @@ class ProductsTableSeeder extends Seeder
         //factory(Category::class,10)->create();
         //factory(ProductImage::class,200)->create();
 
-        $categories = factory(Category::class,5)->create(); //create, genera y guarda
+        $categories = factory(Category::class,4)->create(); //create, genera y guarda
         $categories->each(function($category){
-            $products = factory(Product::class,20)->make(); //Genera productos pero no los guarda en la base
+            $products = factory(Product::class,5)->make(); //Genera productos pero no los guarda en la base
             $category->products()->saveMany($products); //Guarda en la base
 
             $products->each(function($p){
-                $images = factory(ProductImage::class,5)->make();
+                $images = factory(ProductImage::class,4)->make();
                 $p->images()->saveMany($images);
             });           
 
