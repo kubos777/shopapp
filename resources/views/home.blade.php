@@ -43,7 +43,9 @@
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{ url('admin/products') }}"> Gestionar productos </a>
-              <a class="dropdown-item" href="{{ route('logout') }}"
+            <a class="dropdown-item" href="{{ url('admin/categories') }}"> Gestionar categorias </a>
+
+                <a class="dropdown-item" href="{{ route('logout') }}"
               onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
               {{ __('Cerrar sesión') }}
@@ -100,12 +102,17 @@
         </a>
       </li>
     </ul>
-
   </div>
+        @if(session('notification'))
+            <br>
+            <div class="alert alert-danger">
+                {{ session('notification')  }}
+            </div>
+        @endif
+        <br>
+        <h4>El carrito tiene: {{ auth()->user()->cart->details->count()  }} producto(s).</h4>
 
             <div class="row ">
-
-            
             <table class="table">
               <thead>
                 <tr>
@@ -142,9 +149,14 @@
               </tbody>
 
             </table>
-            
-          </div>
-</div>
+        <form action="{{ url('/order') }}" method="post">
+            @csrf
+            <button  class="btn btn-primary btn-round">
+                <i class="material-icons">done</i> Confirmar pedido
+            </button>
+        </form>
+            </div>
+    </div>
 </div>
 </div>
 

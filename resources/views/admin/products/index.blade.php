@@ -88,9 +88,9 @@
                   <td>{{ $producto->category ? $producto->category->name : 'General' }}</td>
                   <td class="text-right">&#36;{{ $producto->price }}</td>
                   <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" title="Ver producto" class="btn btn-info btn-simple btn-xs">
+                    <a href="{{ url('/products/'.$producto->id)  }}" rel="tooltip" title="Ver producto" class="btn btn-info btn-simple btn-xs">
                       <i class="fa fa-info"></i>
-                    </button>
+                    </a>
                     <a href="{{ url('/admin/products/'.$producto->id.'/edit/') }}" type="button" rel="tooltip" title="Editar" class="btn btn-success btn-simple btn-xs">
                       <i class="fa fa-edit"></i>
                     </a>

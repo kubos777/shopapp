@@ -16,13 +16,19 @@ class CartDetailController extends Controller
     	$cartDetail->quantity = $request->quantity;
     	$cartDetail->save();
 
-    	return back();
+        //Flash Data ->Notificiación
+        $notification = 'El producto se ha agregado al carrito correctamente';
+        return back()->with(compact('notification'));
     }
 
     public function destroy(Request $request){
     	$cartDetail = CartDetail::find($request->cart_detail_id);
-    	$cartDetail->delete();
-
+    	if ($cartDetail->cart_id == auth()->user()->cart->id){
+            $cartDetail->delete();
+            //Flash Data ->Notificiación
+            $notification = 'El producto se ha eliminado del carrito correctamente';
+            return back()->with(compact('notification'));
+        }
     	return back();
     }
 }

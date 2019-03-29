@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
         //Para relación uno a muchos, usamos llave foránea
             //Los productos pueden o no pertenecer a una categoría
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
 
 

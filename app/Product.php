@@ -20,7 +20,11 @@ class Product extends Model
     		$featuredImage = $this->images()->first();
     	}else{
     		return $featuredImage->url;
-    	} 		
-    	
+    	}
+    }
+    public function getCategoryNameAttribute(){
+        if($this->category){
+            return $this->category->name;
+        }
     }
 }

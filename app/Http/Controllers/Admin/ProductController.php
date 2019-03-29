@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Category;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class ProductController extends Controller
     	return view('admin.products.index')->with(compact('productos')); //Envía la vista con los productos
     }
     public function create(){
-    	return view('admin.products.create');
+        $categories = Category::orderBy('name')->get();
+    	return view('admin.products.create')->with(compact('categories'));
     }
 
     public function store(Request $request){
@@ -47,6 +49,7 @@ class ProductController extends Controller
     	$producto->description = $request->input('description');
     	$producto->price = $request->input('price');
     	$producto->long_description = $request->input('long_description');
+    	$producto->category_id = $request->category_id;
 
     	$producto->save(); // INSERT
 
@@ -54,8 +57,9 @@ class ProductController extends Controller
     }
 
     public function edit($id){
+        $categories = Category::orderBy('name')->get();
     	$producto = Product::find($id);
-    	return view('admin.products.edit')->with(compact('producto'));
+    	return view('admin.products.edit')->with(compact('producto','categories'));
     }
     public function update(Request $request,$id){
 

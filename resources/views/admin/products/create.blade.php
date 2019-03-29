@@ -95,7 +95,16 @@
                    <div class="form-group">
                     <label class="bmd-label-floating">Precio del producto</label>
                     <input type="number" step="0.01"  name="price" class="form-control" value="{{ old('price') }}">
-                  </div>
+
+                   </div>
+
+                      <label class="control-label">Categoría del producto</label>
+                      <select class="form-control" name="category_id">
+
+                          @foreach($categories as $category)
+                              <option value="{{$category->id}}">{{ $category->name }}</option>
+                          @endforeach
+                      </select>
 
                 </div>
               </div>
