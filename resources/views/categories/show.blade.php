@@ -74,7 +74,7 @@
      <div class="col-md-2 ml-auto mr-auto">
       <div class="profile">
        <div class="avatar">
-        <img src="{{ $product->featured_image_url }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+        <img src="{{ $category->featured_image_url }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
            @if(session('notification'))
                <div class="alert alert-success">
                    {{ session('notification')  }}
@@ -82,69 +82,49 @@
            @endif
        </div>
       <div class="name">
-        <h3 class="title">{{ $product->name}}</h3>
-        <h6>{{ $product->category->name }}</h6>
+        <h3 class="title">{{ $category->name}}</h3>
         
       </div>
     </div>
   </div>
 </div>
 <div class="description text-center">
- <p>{{ $product->long_description }}</p>
+ <p>{{ $category->description }}</p>
 </div>
-<a href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-default">Regresar al listado</a>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-Agregar al carrito</button>
+<a href="{{ url('/') }}" class="btn btn-default">Regresar al listado</a>
 
 <div class="tab-content tab-space">
  <div class="tab-pane active text-center gallery" id="studio">
-  <div class="row">
+  <!--For para productos-->
+     <div class="row">
+     @foreach ($productos as $producto)
+         <div class="col-sm-4 py-2">
+             <div class="card card-body h-100" >
+                 <h4 class="card-title"><a href="{{ url('products/'.$producto->id) }}"> {{ $producto->name }}</a></h4>
+                 <img class="card-img-top" src="{{ $producto->images->first()['image'] }}">
+                 <br>
+                 <small class="card-description text-muted">{{ $producto->category->name }}</small>
+                 <div class="card-body">
+                     <p class="card-text">{{ $producto->description }}</p>
+                 </div>
+             </div>
+         </div>
+     @endforeach
+     </div>
+</div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            {{ $productos->links() }}
+        </div>
+    </div>
+</div>
+</div>
+</div>
 
-   <div class="col-md-3 ml-auto">
-    @foreach ($imagesLeft as $image)
-    <img src="{{ $image->url }}" class="rounded" >
-    @endforeach
-  </div>
+</div>
 
-  <div class="col-md-3 mr-auto">
-   @foreach ($imagesRight as $image) 
-   <img src="{{ $image->url }}}" class="rounded" >
-   @endforeach
- </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 @include('includes.footer')
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Seleccione la cantidad que desea agregar</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-     <form method="POST"  action="{{ url('/cart') }}" >
-      @csrf
-      <input type="hidden" name="product_id" value="{{ $product->id }}">
-      <div class="modal-body">
-          <input type="number" name="quantity" value="1" class="form-control">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Añadir al carrito</button>
-      </div>
-      </form>
-
-    </div>
-  </div>
-</div>
 
 </body>
 

@@ -149,6 +149,7 @@
               </tbody>
 
             </table>
+         <p><strong>Importe a pagar: </strong> {{ auth()->user()->cart->total }}</p>
         <form action="{{ url('/order') }}" method="post">
             @csrf
             <button  class="btn btn-primary btn-round">

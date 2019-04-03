@@ -23,7 +23,7 @@
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" href="{{ url('/') }}">
-          Mi tiendita </a>
+          {{ config('app.name')  }} </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon"></span>
@@ -85,6 +85,7 @@
   <script src="{{ asset('js/plugins/nouislider.min.js')}}" type="text/javascript"></script>
   <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
   <script src="{{ asset('js/material-kit.js?v=2.0.5')}}" type="text/javascript"></script>
+<script src="{{ asset('js/typeahead.bundle.js')  }}" type="text/javascript"></script>
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </html>

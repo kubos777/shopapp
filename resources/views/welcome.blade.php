@@ -110,24 +110,34 @@
           </div>
         </div>
       </div>
+        <div class="row ">
+            <div class="col-md-4 offset-md-4">
+        <form method="get" action="{{ url('/search')}}" class="form-inline">
+            <input id="search" type="text" placeholder="¿Qué producto buscas?" class="form-control" name="query">
+            <button class="btn btn-primary btn-just-icon" style="margin-left: 10px;">
+                <i class="material-icons">search</i>
+            </button>
+        </form>
+            </div>
+        </div>
       <div class="section text-center">
-        <h2 class="title">Lista de productos</h2>
+        <h2 class="title">Lista de categorías</h2>
+
         <div class="team">
           <div class="row">
             <style>
 
             </style>
-            @foreach ($productos as $producto)
+            @foreach ($categories as $categoria)
 
             <div class="col-sm-4 py-2">
 
               <div class="card card-body h-100" >
-                <h4 class="card-title"><a href="{{ url('products/'.$producto->id) }}"> {{ $producto->name }}</a></h4>
-                <img class="card-img-top" src="{{ $producto->images->first()['image'] }}">
+                <h4 class="card-title"><a href="{{ url('categories/'.$categoria->id) }}"> {{ $categoria->name }}</a></h4>
+                <img class="card-img-top" src="{{ $categoria->featured_image_url }}">
                 <br>
-                <small class="card-description text-muted">{{ $producto->category->name }}</small>
                 <div class="card-body">
-                  <p class="card-text">{{ $producto->description }}</p>
+                  <p class="card-text">{{ $categoria->description }}</p>
                 </div>
               </div>
             </div>
@@ -137,7 +147,7 @@
       </div>
       <div class="row">
         <div class="col-md-6 offset-md-3">
-            {{ $productos->links() }}
+
           </div>
           </div>
       <div class="section section-contacts">
@@ -189,6 +199,32 @@
 <script src="{{ asset('js/plugins/nouislider.min.js')}}" type="text/javascript"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('js/material-kit.js?v=2.0.5')}}" type="text/javascript"></script>
+<script src="{{ asset('js/typeahead.bundle.js')  }}" type="text/javascript"></script>
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+    $(function(){
+
+        var products = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+
+            //local: ['hola','mundo','prueba1','prueba2','abcde']
+            prefetch: '{{ url('/products/json') }}'
+
+        });
+
+        $('#search').typeahead({
+            hint: true,
+            highlight: true,
+            minLength:1
+        }, {
+            name: 'products',
+            source: products
+        });
+
+    });
+
+</script>
 </html>

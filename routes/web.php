@@ -22,12 +22,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/products/{id}','ProductController@show'); 
-
+Route::get('/products/json','SearchController@data');
+Route::get('/search/','SearchController@show');
+Route::get('/products/{id}','ProductController@show');
 Route::post('/cart','CartDetailController@store');
 Route::delete('/cart','CartDetailController@destroy');
 Route::post('/order','CartController@update');
-
+Route::get('/categories/{category}','CategoryController@show');
 
 Route::middleware(['auth','admin'])->prefix('admin')->namespace('Admin')->group(function(){
 
